@@ -7,17 +7,7 @@ from pyspark import SparkContext
 from pyspark.sql import SQLContext
 from pyspark.sql.functions import window
 from kafka import KafkaProducer
-from dotenv import load_dotenv
 from pyspark.streaming import StreamingContext
-
-load_dotenv()
-
-# logging.basicConfig(
-#     format='%(asctime)s - %(name)s - %(levelname)s - - %(filename)s - %(funcName)s - %(lineno)d -  %(message)s',
-#     level=logging.DEBUG,
-#     filename='spark.log',
-#     filemode='w'
-# )
 
 
 def create_topics(hashtags):
@@ -34,7 +24,6 @@ def get_hashtag_dataframes(df):
 
 
 def get_tumbling_window_dataframes(hashtag_dfs):
-    # obtain tumbling window dataframes
     windows = dict()
     for hashtag, hashtag_df in hashtag_dfs.items():
         w = hashtag_df.groupBy(
@@ -53,7 +42,6 @@ def process_stream(tweets):
         return
     for i in tweets:
        print(i)
-    print("010101100111111111111111111111111111100000000000000000000000000000000000111111111111111111111111")
     tweets = [json.loads(tweet) for tweet in tweets]
     print(tweets,"==",len(tweets),"----------------------------------------------->")
     
@@ -103,7 +91,7 @@ def publish(latest_count):
 if __name__ == "__main__":
     HASHTAGS = ["Karnataka","Kannada","KGF"]
     STREAM_HOSTNAME = 'localhost' #os.getenv("STREAM_HOSTNAME")
-    STREAM_PORT = 3001#int(os.getenv("STREAM_PORT"))
+    STREAM_PORT = 3001 #int(os.getenv("STREAM_PORT"))
 
     spark_context = SparkContext.getOrCreate()
     spark_streaming_context = StreamingContext(spark_context, 5)

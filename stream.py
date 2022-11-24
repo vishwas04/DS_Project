@@ -17,21 +17,6 @@ logging.basicConfig(
 
 
 class TweetsListener(StreamingClient):
-    # def on_data(self, data):
-    #     try:
-    #         tweet_content = json.loads(data)["text"]
-    #         tweet_time = json.loads(data)["created_at"]
-    #         data = {
-    #             "tweet": tweet_content,
-    #             "time": tweet_time
-    #         }
-    #         logging.debug(data)
-    #         client_socket.send((json.dumps(data) + "\n").encode())
-    #         return True
-
-    #     except BaseException as e:
-    #         logging.error(f"Error parsing data: {e}")
-    #         return True
     def on_tweet(self, tweet):
         if tweet.referenced_tweets == None:
             # self.new_tweet[“tweet”] = tweet.text
@@ -63,10 +48,7 @@ class TwitterStreamer():
         if(stream.get_rules().data != None) :
             for i in stream.get_rules().data:
                 stream.delete_rules(i.id)
-        #prev_id = stream.get_rules().data[0].id
         print("\n\n\n\n",stream.get_rules(),"\n\n\n\n")
-        #stream.delete_rules(prev_id)
-        # add new query
         stream.add_rules([tweepy.StreamRule("Karnataka") , tweepy.StreamRule("Kannada") , tweepy.StreamRule("KGF")])
         stream.filter(tweet_fields=["created_at", "lang"],expansions=["author_id"],user_fields=["username", "name"],)
 
@@ -87,6 +69,4 @@ if __name__ == "__main__":
     print(f"Connection from {client_address} has been established!")
     twitter_streamer = TwitterStreamer(client_socket)
     twitter_streamer.stream_tweets(HASHTAGS)
-    # stream = TweetsListener('AAAAAAAAAAAAAAAAAAAAACVdigEAAAAAWYxo9Lcfw4zFmJ6DXnWHdOMgC8w%3DS8JAvuB3Ld2TDknUJzU3mJ7QvwO3x7TqghJdH62uYLQe3sS6Vk')
-    # stream.filter(track=HASHTAGS, threaded=True)
 

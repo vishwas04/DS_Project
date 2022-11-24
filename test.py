@@ -21,8 +21,6 @@ spark = SparkSession(sc)
 csvFile = open('result.csv', 'a')
 csvWriter = csv.writer(csvFile)
 
-# To set your enviornment variables in your terminal run the following line:
-# export 'BEARER_TOKEN'='<your_bearer_token>'
 bearer_token = """AAAAAAAAAAAAAAAAAAAAACVdigEAAAAAWYxo9Lcfw4zFmJ6DXnWHdOMgC8w%3DS8JAvuB3Ld2TDknUJzU3mJ7QvwO3x7TqghJdH62uYLQe3sS6Vk"""
 
 
